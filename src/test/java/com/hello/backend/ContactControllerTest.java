@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -35,10 +34,6 @@ public class ContactControllerTest extends AbstractTestNGSpringContextTests {
     private final String URL = "/hello/contacts";
     private final String PARAM = "nameFilter";
 
-    @BeforeClass
-    private void setUp() {
-
-    }
 
     @Test
     public void incorrectRegexTest() throws Exception {

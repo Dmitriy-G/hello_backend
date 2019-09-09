@@ -1,0 +1,16 @@
+version: '2'
+services:
+  postgres:
+    image: sameersbn/postgresql:10-2
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - /srv/docker/postgresql:/var/lib/postgresql
+  app:
+      image: java:openjdk-8-jdk-alpine
+      restart: always
+      expose:
+        - "8080"
+      depends_on:
+        - postgres
