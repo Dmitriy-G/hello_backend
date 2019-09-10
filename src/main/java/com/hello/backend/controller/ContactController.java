@@ -21,6 +21,7 @@ public class ContactController {
         this.contactService = contactService;
     }
 
+    // контроллер может принимать параметры page(страница) и size(количество выборок), если они не будут заданы, подставится дефолтное значение
     @GetMapping(value = "/contacts")
     public List<Contact> getContactsByRegex(@RequestParam(value = "nameFilter") String regex, Pageable pageable) {
         return contactService.getContactsByRegex(regex, pageable);

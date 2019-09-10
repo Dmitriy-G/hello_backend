@@ -18,6 +18,9 @@ import java.util.Objects;
 @Cacheable(cacheNames="contacts")
 public class Contact implements Serializable {
 
+    // данные кешируются кешем второго уровня, реализация кеша EhCache
+    // т.е. если данные кто то уже запрашивал, повторно в базу hibernate не будет обращатся
+    // сам EhCache я здесь не настраивал дополнительно, он имеет множество различных настроек
     @Id
     @Column(name = "id")
     private Long id;

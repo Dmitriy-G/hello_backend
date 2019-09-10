@@ -26,6 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @FlywayTest(locationsForMigrate = "test/db/migration")
 public class ContactControllerTest extends AbstractTestNGSpringContextTests {
 
+    // несколько тестов для контроллера
+    // в качестве data source используется EmbeddedPostgres
+    // данные для тестов заполняются в миграции
     @Autowired
     private MockMvc mockMvc;
 
@@ -37,6 +40,7 @@ public class ContactControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void incorrectRegexTest() throws Exception {
+        // при некорректном регулярном выражении должна быть ошибка с нужным кодом
         mockMvc.perform(get(URL))
                 .andExpect(status().isBadRequest());
         mockMvc.perform(get(URL).param(PARAM,"[text"))
@@ -45,6 +49,7 @@ public class ContactControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getContactsByRegexTest() throws Exception {
+        // по регулярному выражению должно вернутся возвращается нужное количесво контактов
         final List<Contact> firstContacts = getContactsByRegex("^a.*$");
 
         assertThat(firstContacts).isNotNull();
@@ -63,6 +68,7 @@ public class ContactControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getWithSpecialCharactersTest() throws Exception {
+        // специальные символы должны обрабатыватся корректно
         final List<Contact> firstContacts = getContactsByRegex("\\^\\^\\^");
 
         assertThat(firstContacts).isNotNull();
@@ -77,6 +83,7 @@ public class ContactControllerTest extends AbstractTestNGSpringContextTests {
 
 
     private List<Contact>getContactsByRegex(String regex) throws Exception {
+        // код, который получает данные от контроллера вынес в отдельный метод
         final MvcResult getContactAction = mockMvc.perform(get(URL).param(PARAM,regex))
                 .andExpect(status().isOk())
                 .andReturn();
