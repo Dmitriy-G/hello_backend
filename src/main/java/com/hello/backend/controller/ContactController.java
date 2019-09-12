@@ -21,7 +21,9 @@ public class ContactController {
         this.contactService = contactService;
     }
 
-    // контроллер может принимать параметры page(страница) и size(количество выборок), если они не будут заданы, подставится дефолтное значение
+    // контроллер дополнительно может принимать параметры page(номер страницы) и size(размер страницы), если они не будут заданы, подставится дефолтное значение
+    // я сделал возможность для пользователя самому настраивать пагинацию
+    // другой вариант, это создать в коде объект Pageable с фиксированными параметрами
     @GetMapping(value = "/contacts")
     public List<Contact> getContactsByRegex(@RequestParam(value = "nameFilter") String regex, Pageable pageable) {
         return contactService.getContactsByRegex(regex, pageable);
