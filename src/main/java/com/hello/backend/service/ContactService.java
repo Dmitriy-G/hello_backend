@@ -39,7 +39,7 @@ public class ContactService {
                     HttpStatus.BAD_REQUEST, e.getDescription(), e);
         }
         try (Stream<Contact> pages = contactRepository.streamAllPaged()){
-            return pages.filter( e -> !pattern.matcher(e.getName()).matches()).peek(entityManager::detach).collect(Collectors.toList());
+            return pages.peek(entityManager::detach).filter( e -> !pattern.matcher(e.getName()).matches()).collect(Collectors.toList());
         }
     }
 }
