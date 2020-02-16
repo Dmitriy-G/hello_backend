@@ -1,16 +1,27 @@
-version: '2'
+version: '3'
 services:
   postgres:
-    image: sameersbn/postgresql:10-2
+    image: postgres:alpine
     restart: always
     ports:
       - "5432:5432"
-    volumes:
-      - /srv/docker/postgresql:/var/lib/postgresql
+    environment:
+      POSTGRES_DB: contactsdb
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testuser
   app:
-      image: java:openjdk-8-jdk-alpine
-      restart: always
-      expose:
-        - "8080"
-      depends_on:
-        - postgres
+    image: app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+       APP_DB_HOST: postgres
+       APP_DB_NAME: contactsdb
+       APP_DB_USER: testuser
+       APP_DB_PASS: testuser
+    volumes:
+      - /data/springboot-docker-compose-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
