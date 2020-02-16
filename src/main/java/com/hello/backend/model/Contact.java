@@ -1,10 +1,6 @@
 package com.hello.backend.model;
 
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.cache.annotation.Cacheable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,13 +10,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "contacts")
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-@Cacheable(cacheNames="contacts")
 public class Contact implements Serializable {
 
-    // данные кешируются кешем второго уровня, реализация кеша EhCache
-    // т.е. если данные кто то уже запрашивал, повторно в базу hibernate не будет обращатся
-    // сам EhCache я здесь не настраивал дополнительно, он имеет множество различных настроек
     @Id
     @Column(name = "id")
     private Long id;

@@ -3,7 +3,6 @@ package com.hello.backend.controller;
 import com.hello.backend.model.Contact;
 import com.hello.backend.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,11 +20,8 @@ public class ContactController {
         this.contactService = contactService;
     }
 
-    // контроллер дополнительно может принимать параметры page(номер страницы) и size(размер страницы), если они не будут заданы, подставится дефолтное значение
-    // я сделал возможность для пользователя самому настраивать пагинацию
-    // другой вариант, это создать в коде объект Pageable с фиксированными параметрами
     @GetMapping(value = "/contacts")
-    public List<Contact> getContactsByRegex(@RequestParam(value = "nameFilter") String regex, Pageable pageable) {
-        return contactService.getContactsByRegex(regex, pageable);
+    public List<Contact> getContactsByRegex(@RequestParam(value = "nameFilter") String regex) {
+        return contactService.getContactsByRegex(regex);
     }
 }
